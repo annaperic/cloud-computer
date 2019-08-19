@@ -1,13 +1,12 @@
-import {compose} from 'react-apollo';
+import { Button, Checkbox, Col, Form, Icon, Input, notification, Row } from 'antd';
 import Link from 'next/link';
-import {Form, Icon, Input, Button, Checkbox, Row, Col, notification} from 'antd';
+import { compose } from 'react-apollo';
+
+import { AUTH_TOKEN } from '../constants';
+import { withAuthClient } from '../lib/with-auth-client';
 
 /** libs **/
-import {withAuthClient} from '../lib/with-auth-client';
-
 /** constants **/
-import {AUTH_TOKEN} from '../constants';
-
 /** styles **/
 const styles = {
     image : {
@@ -50,7 +49,7 @@ const Login = (props) => {
                     window.location = '/';
                 } catch (e) {
                     notification.error({
-                        message: 'Oh no! Something went wrong',
+                        message: 'Oh no! Something went wrong :/',
                         description: e.message
                     });
                 }
@@ -67,7 +66,7 @@ const Login = (props) => {
                         alt="Cloud Computer"/>
                     <Form.Item>
                         {getFieldDecorator('username', {
-                            rules: [{required: true, message: 'Please input your username!'}],
+                            rules: [{required: true, message: 'Please enter your username!'}],
                         })(
                             <Input
                                 prefix={<Icon type="user" style={{color: 'rgba(0,0,0,.25)'}}/>}
@@ -77,7 +76,7 @@ const Login = (props) => {
                     </Form.Item>
                     <Form.Item>
                         {getFieldDecorator('password', {
-                            rules: [{required: true, message: 'Please input your Password!'}],
+                            rules: [{required: true, message: 'Please enter your password!'}],
                         })(
                             <Input
                                 prefix={<Icon type="lock" style={{color: 'rgba(0,0,0,.25)'}}/>}
@@ -87,23 +86,23 @@ const Login = (props) => {
                         )}
                     </Form.Item>
                     <Form.Item>
+                        <Button icon="google" style={styles.loginGoogle} onClick={()=>window.location = process.env.GOOGLE_REDIRECT}>
+                            Sign in with Google
+                        </Button>
+                        <Button icon="github" style={styles.loginGithub} onClick={()=>window.location = process.env.GITHUB_REDIRECT}>
+                            Sign in with Github
+                        </Button>
+                        <Button type="primary" htmlType="submit" style={styles.loginFormButton}>
+                            Log in
+                        </Button>
+                        Or <Link href="/register"><a>Register now!</a></Link>
                         {getFieldDecorator('remember', {
                             valuePropName: 'checked',
                             initialValue: true,
                         })(<Checkbox>Remember me</Checkbox>)}
                         <a style={styles.loginFormForgot} href="">
-                            Forgot password
+                            Forgot password?
                         </a>
-                        <Button type="primary" htmlType="submit" style={styles.loginFormButton}>
-                            Log in
-                        </Button>
-                        <Button icon="google" style={styles.loginGoogle} onClick={()=>window.location = process.env.GOOGLE_REDIRECT}>
-                            Sign-In with Google
-                        </Button>
-                        <Button icon="github" style={styles.loginGithub} onClick={()=>window.location = process.env.GITHUB_REDIRECT}>
-                            Sign-In with Github
-                        </Button>
-                        Or <Link href="/register"><a>enquire now!</a></Link>
                     </Form.Item>
                 </Form>
             </Col>

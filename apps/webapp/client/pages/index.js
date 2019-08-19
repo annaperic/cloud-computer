@@ -1,11 +1,12 @@
-import {compose, withApollo} from 'react-apollo';
-import Router from 'next/router';
-import jwt_decode from 'jwt-decode';
-import {Col, Input, Modal, notification, Row} from 'antd';
-import {useState} from 'react';
+import { Col, Input, Modal, notification, Row } from 'antd';
 import gql from 'graphql-tag';
-import {AUTH_TOKEN, HASURA_CLAIM, HASURA_USER_ID} from '../constants';
-import {withProtectRoute} from '../lib/with-protect-route';
+import jwt_decode from 'jwt-decode';
+import Router from 'next/router';
+import { useState } from 'react';
+import { compose, withApollo } from 'react-apollo';
+
+import { AUTH_TOKEN, HASURA_CLAIM, HASURA_USER_ID } from '../constants';
+import { withProtectRoute } from '../lib/with-protect-route';
 
 /** styles **/
 const styles = {
@@ -61,8 +62,8 @@ const Index = ({client}) => {
 
             if (user.length) {
                 return notification.error({
-                    message: 'Something went wrong',
-                    description: 'You cant use this cloud computer name its existing already',
+                    message: 'Something went wrong :/',
+                    description: 'Name already exists',
                 });
             }
 
@@ -91,8 +92,8 @@ const Index = ({client}) => {
             });
 
             notification.success({
-                message: 'Nice! its available',
-                description: 'Time to build your server. Be patient :). Let me just redirect you',
+                message: 'Nice! It\'s available.',
+                description: 'Time to build your server. Be patient :) Let me just redirect you.',
             });
 
             setTimeout(() => {
@@ -106,8 +107,8 @@ const Index = ({client}) => {
 
         } catch (e) {
             notification.error({
-                message: 'Something went wrong',
-                description: 'I cant seem to process this request',
+                message: 'Something went wrong :/',
+                description: 'I can\'t seem to process this request.',
             });
         }
     };
@@ -123,7 +124,7 @@ const Index = ({client}) => {
                 onOk={handleOk}
                 onCancel={handleCancel}
             >
-                <p>Please enter the name of you cloud computer:</p>
+                <p>Please enter the name of your cloud computer:</p>
                 <p><Input placeholder="jacksonwizard" value={cloudUser}
                           onChange={(cloudUser) => setCloudUser(cloudUser.currentTarget.value)}/></p>
             </Modal>
