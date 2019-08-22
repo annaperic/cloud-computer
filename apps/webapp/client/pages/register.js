@@ -6,19 +6,27 @@ import {withAuthClient} from '../lib/with-auth-client';
 
 /** styles **/
 const styles = {
-    image : {
-        width: '300px'
+    image: {
+        maxWidth: '300px',
     },
     registerForm: {
         maxWidth: '300px',
-        margin: '12% auto'
+        minWidth: '300px',
+        margin: '10% auto',
     },
     registerFormForgot: {
         float: 'right'
     },
     registerFormButton: {
-        width: '100%'
-    }
+        width: '100%',
+        backgroundColor: 'rgb(77,29,119)',
+        border: 'none'
+    },
+    registerHeading: {
+        padding: '50px 31% 30px 31%',
+
+    },
+
 };
 
 const Register = (props) => {
@@ -26,14 +34,12 @@ const Register = (props) => {
 
     const handleSubmit = e => {
         e.preventDefault();
-        props.form.validateFields(async (err, {username, password, firstname, lastname}) => {
+        props.form.validateFields(async (err, {username, password}) => {
             if (!err) {
                 try {
                     await props.authAPI.post('/auth/register', {
                         username,
-                        password,
-                        firstname,
-                        lastname
+                        password
                     });
                     window.location = '/login';
                 } catch (e) {
@@ -50,51 +56,33 @@ const Register = (props) => {
     };
     return (
         <Row>
-            <Col offset={8} span={8}>
+            <Col style={{width: '100%', margin: '0', overflowY: 'hidden'}} offset={8} span={8}>
                 <Form onSubmit={handleSubmit} style={styles.registerForm}>
                     <img
                         style={styles.image}
                         src="https://avatars3.githubusercontent.com/u/49678748?s=400&amp;u=23aa86cbd4f8d9a5b2c2a8cc744c4d364903a772"
                         alt="Cloud Computer"/>
-                    <h1>Register</h1>
+                    <h1 style={styles.registerHeading}>Register</h1>
+                    <p style={{ padding: '0', margin: '0' }}>Create a username</p>
                     <Form.Item>
                         {getFieldDecorator('username', {
-                            rules: [{required: true, message: 'Please input your username!'}],
+                            rules: [{required: true, message: 'Please enter your username!'}],
                         })(
                             <Input
                                 prefix={<Icon type="user" style={{color: 'rgba(0,0,0,.25)'}}/>}
-                                placeholder="Username"
+                                placeholder ="Username"
                             />,
                         )}
                     </Form.Item>
+                    <p style={{ padding: '0', margin: '0' }}>Create a password</p>
                     <Form.Item>
                         {getFieldDecorator('password', {
-                            rules: [{required: true, message: 'Please input your Password!'}],
+                            rules: [{required: true, message: 'Please enter your password!'}],
                         })(
                             <Input
                                 prefix={<Icon type="lock" style={{color: 'rgba(0,0,0,.25)'}}/>}
                                 type="password"
                                 placeholder="Password"
-                            />,
-                        )}
-                    </Form.Item>
-                    <Form.Item>
-                        {getFieldDecorator('firstname', {
-                            rules: [{required: true, message: 'Please input your first name!'}],
-                        })(
-                            <Input
-                                prefix={<Icon type="user" style={{color: 'rgba(0,0,0,.25)'}}/>}
-                                placeholder="First name"
-                            />,
-                        )}
-                    </Form.Item>
-                    <Form.Item>
-                        {getFieldDecorator('lastname', {
-                            rules: [{required: true, message: 'Please input your last name!'}],
-                        })(
-                            <Input
-                                prefix={<Icon type="user" style={{color: 'rgba(0,0,0,.25)'}}/>}
-                                placeholder="Last name"
                             />,
                         )}
                     </Form.Item>

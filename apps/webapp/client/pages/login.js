@@ -10,24 +10,39 @@ import { withAuthClient } from '../lib/with-auth-client';
 /** styles **/
 const styles = {
     image : {
-      width: '300px'
+      width: '300px',
+      paddingBottom: '100px'
     },
     loginForm: {
         maxWidth: '300px',
-        margin: '12% auto'
+        minWidth: '300px',
+        margin: '5% auto',
+        border: 'solid 2px pink',
+        textAlign: 'center'
     },
     loginFormForgot: {
-        float: 'right'
+        float: 'right',
     },
     loginFormButton: {
-        width: '100%'
+        width: '100%',
+
     },
     loginGoogle: {
-        width: '100%'
+        width: '100%',
+        backgroundColor: 'rgb(0,0,0)',
+        color: 'rgb(250, 250, 250)',
+        border: 'none'
     },
     loginGithub: {
-        width: '100%'
+        width: '100%',
+        backgroundColor: 'rgb(0,0,0)',
+        color: 'rgb(250, 250, 250)',
+        border: 'none'
+    },
+    formItem: {
+
     }
+
 };
 
 
@@ -49,7 +64,7 @@ const Login = (props) => {
                     window.location = '/';
                 } catch (e) {
                     notification.error({
-                        message: 'Oh no! Something went wrong :/',
+                        message: 'Something went wrong',
                         description: e.message
                     });
                 }
@@ -58,15 +73,25 @@ const Login = (props) => {
     };
     return (
         <Row>
-            <Col offset={8} span={8}>
+            <Col style={{width: '100%', margin: '0', overflowY: 'hidden'}} offset={8} span={8}>
                 <Form onSubmit={handleSubmit} style={styles.loginForm}>
                     <img
                         style={styles.image}
                         src="https://avatars3.githubusercontent.com/u/49678748?s=400&amp;u=23aa86cbd4f8d9a5b2c2a8cc744c4d364903a772"
                         alt="Cloud Computer"/>
                     <Form.Item>
+                        <Button icon="google" style={styles.loginGoogle} onClick={() => window.location = process.env.GOOGLE_REDIRECT}>
+                            Sign in with Google
+                        </Button>
+                        <Button icon="github" style={styles.loginGithub} onClick={() => window.location = process.env.GITHUB_REDIRECT}>
+                            Sign in with Github
+                        </Button>
+                    </Form.Item>
+                    <Form.Item style={styles.formItem}>
+                        <p>OR</p>
+                        <p>Sign in with Email</p>
                         {getFieldDecorator('username', {
-                            rules: [{required: true, message: 'Please enter your username!'}],
+                            rules: [{required: true, message: 'Please enter your username!' }],
                         })(
                             <Input
                                 prefix={<Icon type="user" style={{color: 'rgba(0,0,0,.25)'}}/>}
@@ -75,7 +100,7 @@ const Login = (props) => {
                         )}
                     </Form.Item>
                     <Form.Item>
-                        {getFieldDecorator('password', {
+                        {getFieldDecorator ('password', {
                             rules: [{required: true, message: 'Please enter your password!'}],
                         })(
                             <Input
@@ -86,23 +111,22 @@ const Login = (props) => {
                         )}
                     </Form.Item>
                     <Form.Item>
-                        <Button icon="google" style={styles.loginGoogle} onClick={()=>window.location = process.env.GOOGLE_REDIRECT}>
-                            Sign in with Google
-                        </Button>
-                        <Button icon="github" style={styles.loginGithub} onClick={()=>window.location = process.env.GITHUB_REDIRECT}>
-                            Sign in with Github
-                        </Button>
                         <Button type="primary" htmlType="submit" style={styles.loginFormButton}>
                             Log in
                         </Button>
-                        Or <Link href="/register"><a>Register now!</a></Link>
                         {getFieldDecorator('remember', {
                             valuePropName: 'checked',
                             initialValue: true,
-                        })(<Checkbox>Remember me</Checkbox>)}
+                        })(
+                        <Checkbox style={{float: 'left'}}>Remember me</Checkbox>)}
                         <a style={styles.loginFormForgot} href="">
                             Forgot password?
                         </a>
+                    </Form.Item>
+                    <Form.Item>
+                         <Link href="/register">
+                             <a style={{ color: 'rgb(112,40,204)' }}>Register now!</a>
+                         </Link>
                     </Form.Item>
                 </Form>
             </Col>

@@ -62,7 +62,7 @@ const Index = ({client}) => {
 
             if (user.length) {
                 return notification.error({
-                    message: 'Something went wrong :/',
+                    message: 'Something went wrong',
                     description: 'Name already exists',
                 });
             }
@@ -107,7 +107,7 @@ const Index = ({client}) => {
 
         } catch (e) {
             notification.error({
-                message: 'Something went wrong :/',
+                message: 'Something went wrong',
                 description: 'I can\'t seem to process this request.',
             });
         }
