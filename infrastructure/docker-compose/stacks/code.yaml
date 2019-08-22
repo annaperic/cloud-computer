@@ -3,8 +3,8 @@ version: '3.5'
 services:
 
   code:
-    image: $CLOUD_COMPUTER_IMAGE
-    command: code-server --no-auth $CLOUD_COMPUTER_REPOSITORY
+    image: cloudnativecomputer/code:latest
+    command: code-server $CLOUD_COMPUTER_REPOSITORY
     restart: always
     tty: true
     labels:
@@ -23,9 +23,10 @@ services:
     labels:
       - traefik.enable=true
       - traefik.frontend.rule=Host:code.$CLOUD_COMPUTER_HOST_DNS
-      - traefik.port=8443
+      - traefik.port=8080
     volumes:
       - /var/run/docker.sock:/var/run/docker.sock
+      - CLOUD_COMPUTER_STORAGE:$CLOUD_COMPUTER_STORAGE
       - CLOUD_COMPUTER_REPOSITORY:$CLOUD_COMPUTER_REPOSITORY
       - CLOUD_COMPUTER_TMUX:$CLOUD_COMPUTER_TMUX
 
